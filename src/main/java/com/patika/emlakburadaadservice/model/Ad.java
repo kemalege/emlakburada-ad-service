@@ -3,6 +3,7 @@ package com.patika.emlakburadaadservice.model;
 import com.patika.emlakburadaadservice.model.enums.AdStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "orders")
 public class Ad {
 
