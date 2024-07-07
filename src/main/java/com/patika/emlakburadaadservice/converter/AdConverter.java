@@ -10,17 +10,20 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AdConverter {
 
-    public static Ad convert(AdSaveRequest request, Long customerId) {
+    public static Ad convert(AdSaveRequest request, Long userId) {
+        String uuid = UUID.randomUUID().toString();
+        String adCode = "ad-" + uuid;
         return Ad.builder()
                 .createDate(LocalDateTime.now())
                 .adStatus(AdStatus.IN_REVIEW)
-                .adCode("ad-code" + request.getCustomerId())
-                .customerId(customerId)
+                .adCode(adCode)
+                .customerId(userId)
                 .build();
     }
 
