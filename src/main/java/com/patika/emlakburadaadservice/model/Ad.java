@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "orders")
+@Table(name = "ads")
 public class Ad {
 
     @Id
@@ -29,8 +29,8 @@ public class Ad {
     @Column(name = "ad_status", nullable = false)
     private AdStatus adStatus;
 
-    @Column(name = "customer_id", nullable = false)
-    private Long customerId;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
     @Column(name = "ad_code", nullable = false)
     private String adCode;

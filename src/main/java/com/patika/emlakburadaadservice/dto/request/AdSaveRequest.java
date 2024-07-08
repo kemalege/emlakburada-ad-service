@@ -13,6 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 public class AdSaveRequest {
 
-    private Long customerId;
+    private Long userId;
 
 }

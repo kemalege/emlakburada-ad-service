@@ -23,7 +23,7 @@ public class AdConverter {
                 .createDate(LocalDateTime.now())
                 .adStatus(AdStatus.IN_REVIEW)
                 .adCode(adCode)
-                .customerId(userId)
+                .userId(userId)
                 .build();
     }
 

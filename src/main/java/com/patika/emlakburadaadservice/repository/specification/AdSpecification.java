@@ -19,8 +19,8 @@ public class AdSpecification {
 
             List<Predicate> predicateList = new ArrayList<>();
 
-            if (request.getCustomerId() != null) {
-                predicateList.add(criteriaBuilder.equal(root.get("userId"), request.getCustomerId()));
+            if (request.getUserId() != null) {
+                predicateList.add(criteriaBuilder.equal(root.get("userId"), request.getUserId()));
             }
 
             return criteriaBuilder.and(predicateList.toArray(new Predicate[0]));
