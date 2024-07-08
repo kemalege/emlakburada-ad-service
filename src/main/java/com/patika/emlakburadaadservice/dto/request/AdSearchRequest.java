@@ -13,6 +13,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class AdSearchRequest extends BaseSearchRequest {
 
-    private Long customerId;
+    private Long userId;
     private String sort;
 }
