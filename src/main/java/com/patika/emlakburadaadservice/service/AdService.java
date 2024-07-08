@@ -5,8 +5,12 @@ import com.patika.emlakburadaadservice.client.user.service.UserService;
 import com.patika.emlakburadaadservice.converter.AdConverter;
 import com.patika.emlakburadaadservice.dto.request.AdSaveRequest;
 import com.patika.emlakburadaadservice.dto.request.AdSearchRequest;
+import com.patika.emlakburadaadservice.dto.request.AdUpdateStatusRequest;
 import com.patika.emlakburadaadservice.dto.response.AdResponse;
+import com.patika.emlakburadaadservice.exception.EmlakBuradaException;
+import com.patika.emlakburadaadservice.exception.ExceptionMessages;
 import com.patika.emlakburadaadservice.model.Ad;
+import com.patika.emlakburadaadservice.model.enums.AdStatus;
 import com.patika.emlakburadaadservice.repository.AdRepository;
 import com.patika.emlakburadaadservice.repository.specification.AdSpecification;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.Set;
 
 @RequiredArgsConstructor
@@ -54,6 +59,27 @@ public class AdService {
         log.info("retrived from db. ads size:{}", ads.getSize());
 
         return AdConverter.toResponse(ads.stream().toList());
+    }
+
+    public Ad getById(Long id) {
+        Optional<Ad> foundAd = adRepository.findById(id);
+
+        if (foundAd.isEmpty()) {
+            log.error(ExceptionMessages.AD_NOT_FOUND);
+            throw new EmlakBuradaException(ExceptionMessages.AD_NOT_FOUND);
+        }
+        return foundAd.get();
+    }
+
+    public void updateStatus(Long adId, AdUpdateStatusRequest request) {
+        Ad ad = getById(adId);
+        ad.setAdStatus(request.getAdStatus());
+        adRepository.save(ad);
+    }
+
+    public void deleteAd(Long adId) {
+        Ad ad = getById(adId);
+        adRepository.delete(ad);
     }
 
 }
