@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -22,6 +23,9 @@ public class Ad {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "ad_title", nullable = false)
+    private String title;
+
     @Column(name = "create_date")
     private LocalDateTime createDate;
 
@@ -34,5 +38,18 @@ public class Ad {
 
     @Column(name = "ad_code", nullable = false)
     private String adCode;
+
+    @Column(name = "ad_details", nullable = false)
+    private String adDetails;
+
+//    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @Column(name = "ad_location", nullable = false)
+    private String location;
+
+    @Column(name = "ad_price", nullable = false)
+    private BigDecimal price;
+
+    private String imageUrl;
+    private String category;
 
 }
