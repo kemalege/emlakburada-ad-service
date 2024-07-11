@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Field;
 import java.util.Optional;
 import java.util.Set;
 
@@ -47,6 +48,29 @@ public class AdService {
 
     }
 
+    public void update(Long adId, AdSaveRequest request) {
+        Ad ad = getById(adId);
+
+        Field[] fields = AdSaveRequest.class.getDeclaredFields();
+
+        for (Field requestField : fields) {
+            try {
+                requestField.setAccessible(true);
+                Object value = requestField.get(request);
+                if (value != null) {
+                    Field adField = Ad.class.getDeclaredField(requestField.getName());
+                    adField.setAccessible(true);
+                    adField.set(ad, value);
+                }
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                System.err.println("No such field or unable to access field: " + requestField.getName());
+            }
+        }
+
+        adRepository.save(ad);
+    }
+
+
     @Transactional(readOnly = true)
     public Set<AdResponse> getAll(AdSearchRequest request) {
 
@@ -63,12 +87,18 @@ public class AdService {
 
     public Ad getById(Long id) {
         Optional<Ad> foundAd = adRepository.findById(id);
-
         if (foundAd.isEmpty()) {
             log.error(ExceptionMessages.AD_NOT_FOUND);
             throw new EmlakBuradaException(ExceptionMessages.AD_NOT_FOUND);
         }
         return foundAd.get();
+    }
+
+    @Transactional(readOnly = true)
+    public AdResponse getAdResponseById(Long id) {
+        Ad ad = getById(id);
+        UserResponse userResponse = userService.getUserById(ad.getUserId());
+        return AdConverter.toResponseWithUser(ad, userResponse);
     }
 
     public void updateStatus(Long adId, AdUpdateStatusRequest request) {
@@ -77,7 +107,7 @@ public class AdService {
         adRepository.save(ad);
     }
 
-    public void deleteAd(Long adId) {
+    public void delete(Long adId) {
         Ad ad = getById(adId);
         adRepository.delete(ad);
     }

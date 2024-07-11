@@ -31,15 +31,26 @@ public class AdController {
         return new ResponseEntity<>(GenericResponse.success(adService.getAll(request)), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<GenericResponse<AdResponse>> getById(@PathVariable Long id) {
+        return new ResponseEntity<>(GenericResponse.success(adService.getAdResponseById(id)), HttpStatus.OK);
+    }
+
     @PostMapping("/{id}/status")
     public ResponseEntity<Void> updateStatus(@PathVariable Long id, @RequestBody AdUpdateStatusRequest request){
         adService.updateStatus(id, request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("/{id}/update")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody AdSaveRequest request) {
+        adService.update(id, request);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}/delete")
-    public ResponseEntity<Void> deleteAd(@PathVariable Long id) {
-        adService.deleteAd(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        adService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
