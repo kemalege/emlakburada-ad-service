@@ -5,5 +5,5 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ExceptionMessages {
-
+    public static final String AD_NOT_FOUND = "İlan bulunamadı.";
 }
