@@ -3,8 +3,6 @@ package com.patika.emlakburadaadservice.producer.dto;
 import com.patika.emlakburadaadservice.producer.dto.enums.NotificationType;
 import lombok.*;
 
-import java.math.BigDecimal;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -13,6 +11,6 @@ import java.math.BigDecimal;
 public class NotificationDto {
 
     private NotificationType notificationType;
-    private String adCode;
+    private Long id;
 
 }
