@@ -23,6 +23,10 @@ public class AdSpecification {
                 predicateList.add(criteriaBuilder.equal(root.get("userId"), request.getUserId()));
             }
 
+            if (request.getAdStatus() != null) {
+                predicateList.add(criteriaBuilder.equal(root.get("adStatus"), request.getAdStatus()));
+            }
+
             return criteriaBuilder.and(predicateList.toArray(new Predicate[0]));
         };
     }
