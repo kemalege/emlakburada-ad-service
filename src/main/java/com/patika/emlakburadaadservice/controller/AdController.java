@@ -4,6 +4,7 @@ import com.patika.emlakburadaadservice.dto.request.AdSaveRequest;
 import com.patika.emlakburadaadservice.dto.request.AdSearchRequest;
 import com.patika.emlakburadaadservice.dto.request.AdUpdateStatusRequest;
 import com.patika.emlakburadaadservice.dto.response.AdResponse;
+import com.patika.emlakburadaadservice.dto.response.AdResponseWrapper;
 import com.patika.emlakburadaadservice.dto.response.GenericResponse;
 import com.patika.emlakburadaadservice.service.AdService;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,9 @@ public class AdController {
     }
 
     @GetMapping
-    public ResponseEntity<GenericResponse<Set<AdResponse>>> getAll(@RequestBody AdSearchRequest request) {
-        return new ResponseEntity<>(GenericResponse.success(adService.getAll(request)), HttpStatus.OK);
+    public ResponseEntity<GenericResponse<Set<AdResponse>>> getAll(@ModelAttribute AdSearchRequest request) {
+        AdResponseWrapper responseWrapper = adService.getAll(request);
+        return new ResponseEntity<>(GenericResponse.success(responseWrapper.getAds(), responseWrapper.getTotalRecords()), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
